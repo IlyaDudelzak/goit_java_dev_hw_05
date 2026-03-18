@@ -16,13 +16,13 @@ public class FibonacciCalculator {
         if(n < 3) { return 1; } // Also here
         return generateIteratively(n - 2) + generateRecursively(n - 1);
     }
-    private static List<Integer> fibonacci = new ArrayList<>();
+    private static final List<Integer> fibonacci = new ArrayList<>();
     static {
         fibonacci.add(1);
         fibonacci.add(1);
     }
     public int generateDP(int n) {
-        if(n <= fibonacci.size()) { return fibonacci.get(n - 1).intValue(); } // And HERE
+        if(n <= fibonacci.size()) { return fibonacci.get(n - 1); } // And HERE
         int fib = generateDP(n - 2) + generateDP(n - 1);
         fibonacci.add(fib);
         return fib;
