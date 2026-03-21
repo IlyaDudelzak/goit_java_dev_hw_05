@@ -1,9 +1,16 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FibonacciCalculator {
+    /*
+    This function has a:
+    Time complexity of O(n)
+    Memory comlexity of O(1)
+     */
     public int generateIteratively(int n) {
-        if(n < 3) { return 1; } // I HATE {} here
+        if (n <= 0) return 0; // please?
+        if (n <= 2) return 1;
+
         int a = 1, b = 1;
         for (int i = 3; i <= n; i++) {
             int temp = a + b;
@@ -12,20 +19,33 @@ public class FibonacciCalculator {
         }
         return b;
     }
+
+    /*
+    This function has a:
+    Time complexity of O(n^2)
+    Memory comlexity of O(n)
+     */
     public int generateRecursively(int n) {
-        if(n < 3) { return 1; } // Also here
-        return generateIteratively(n - 2) + generateRecursively(n - 1);
+        if (n <= 0) return 0;
+        if (n <= 2) return 1;
+        return generateRecursively(n - 1) + generateRecursively(n - 2);
     }
-    private static final List<Integer> fibonacci = new ArrayList<>();
-    static {
-        fibonacci.add(1);
-        fibonacci.add(1);
-    }
+
+    /*
+    This function has a:
+    Time complexity of O(n)
+    Memory comlexity of O(n)
+     */
+    private final Map<Integer, Integer> memo = new HashMap<>();
     public int generateDP(int n) {
-        if(n <= fibonacci.size()) { return fibonacci.get(n - 1); } // And HERE
-        int fib = generateDP(n - 2) + generateDP(n - 1);
-        fibonacci.add(fib);
-        return fib;
+        if (n <= 0) return 0;
+        if (n <= 2) return 1;
+
+        if (memo.containsKey(n)) return memo.get(n);
+
+        int result = generateDP(n - 1) + generateDP(n - 2);
+        memo.put(n, result);
+        return result;
     }
 
 }
