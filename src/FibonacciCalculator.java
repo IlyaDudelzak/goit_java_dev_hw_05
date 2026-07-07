@@ -36,16 +36,21 @@ public class FibonacciCalculator {
     Time complexity of O(n)
     Memory comlexity of O(n)
      */
-    private final Map<Integer, Integer> memo = new HashMap<>();
     public int generateDP(int n) {
         if (n <= 0) return 0;
         if (n <= 2) return 1;
-
-        if (memo.containsKey(n)) return memo.get(n);
-
-        int result = generateDP(n - 1) + generateDP(n - 2);
-        memo.put(n, result);
-        return result;
-    }
+    
+        Map<Integer, Integer> localMemo = new HashMap<>();
+        
+        localMemo.put(1, 1);
+        localMemo.put(2, 1);
+    
+        for (int i = 3; i <= n; i++) {
+            int sum = localMemo.get(i - 1) + localMemo.get(i - 2);
+            localMemo.put(i, sum);
+        }
+    
+        return localMemo.get(n);
+}
 
 }
